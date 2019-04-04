@@ -12,8 +12,8 @@ app = Flask(__name__)
 
 #Global Variables
 ELK_SERVER_NAME = ""
-BOOTSTRAP_SERVER = '192.168.1.106:9092'
-KAFKA_SERVER_NAME = "192.168.1.106:2181"
+BOOTSTRAP_SERVER = '192.168.56.3:9092'
+KAFKA_SERVER_NAME = "192.168.56.3:2181"
 TOPIC = 'alerts'
 
 producer_kfk = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVER,
@@ -47,12 +47,10 @@ class SCMessage:
 		data['datetime'] = self.datetime		
 		json_data = json.dumps(data)
 		
-		return json_data
+		return data
 		
 	def SendToKafka(self,producer_kfk):	
-		
-
-		
+				
 		for _ in range(1):							
 			data = self.BuildJson()	
 			producer_kfk.send(TOPIC, value=data)
